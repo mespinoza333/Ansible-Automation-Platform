@@ -1,0 +1,8 @@
+---
+- hosts: win
+  name: Instalar parches de Windows
+  tasks:
+    - name:  Windows Updates + reinicio
+      win_updates:
+        category_names: "{{ categories | default(omit) }}"
+        reboot: '{{ reboot_server | default(true) }}'

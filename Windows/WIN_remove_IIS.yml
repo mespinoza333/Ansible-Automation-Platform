@@ -1,0 +1,20 @@
+---
+- name: Remove IIS
+  hosts: your_windows_server
+  
+  tasks:
+    - name: Stop the W3Svc service
+      win_service:
+        name: W3SVC
+        state: stopped
+
+    - name: Remove the Web-Server feature
+      win_feature:
+        name: Web-Server
+        state: absent
+
+      # Opcionalmente, elimine la página de índice usando el módulo win_file
+    - name: Delete the index.html file
+      win_file:
+        path: C:\inetpub\wwwroot\index.html
+        state: absent
