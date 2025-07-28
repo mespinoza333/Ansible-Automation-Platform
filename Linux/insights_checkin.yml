@@ -1,0 +1,27 @@
+---
+- name: Registrar y hacer check-in en Red Hat Insights
+  hosts: all   #Aqui seleccionar tus grupos o host particulares
+  become: yes
+  tasks:
+
+    - name: Asegurarse de que el cliente de Insights esté instalado
+      package:
+        name: insights-client
+        state: present
+
+    - name: Registrar el sistema en Red Hat Insights
+      command: insights-client --register
+      register: register_output
+      changed_when: "'already registered' not in register_output.stdout"
+
+    - name: Forzar check-in (envío de datos)
+      command: insights-client --checkin
+
+    - name: Mostrar estado de Insights
+      command: insights-client --status
+      register: insights_status
+
+    - name: Mostrar salida del estado
+      debug:
+        var: insights_status.stdout_lines
+#

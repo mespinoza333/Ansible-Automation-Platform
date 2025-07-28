@@ -1,0 +1,8 @@
+#Variables -> archivo con nombre de "app_list.yml"
+choco_packages:
+ - name: nodejs
+   version: 13.0.0
+ - name: python
+   version: 3.6.0
+ - name: firefox
+   version: 121.0.0
